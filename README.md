@@ -10,6 +10,18 @@
 
 ---
 
+## 配套项目
+
+本工具通常和下面这个项目一起用（同一个作者）：
+
+- **[beat-saber-video-tool](https://github.com/EuphonXD/beat-saber-video-tool)**（网页版视频工具）
+  它用 **yt-dlp** 批量下载 YouTube 视频；如果下载时报 `Sign in to confirm you’re not a bot`，
+  就用本仓库的 `setup-pot.ps1` 在本机起一个 PoToken 提供者，再回到下载工具里重试。
+- **[SetlistChallenge](https://github.com/EuphonXD/SetlistChallenge)**（Beat Saber 无缝连打 mod）
+  同属这套 Beat Saber 工具链。
+
+---
+
 ## 它解决什么
 
 YouTube 会对机房 / 代理 IP 做风险控制，yt-dlp 下载时可能报：
