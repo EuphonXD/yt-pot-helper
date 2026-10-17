@@ -79,6 +79,47 @@ yt-dlp --extractor-args "youtube:fetch_pot=always" <URL>
 上游的 yt-dlp 插件需要装到 yt-dlp 的 plugin 目录，详见：
 <https://github.com/Brainicism/bgutil-ytdlp-pot-provider>
 
+## 🍪 YouTube Cookie Sync（推送到视频工具）
+
+批量下载 YouTube 视频时，除了 PoToken，通常还需要一份登录态 **cookies**。
+本仓库自带一个小脚本：从本机浏览器导出 YouTube cookies，
+**自动 POST 到 beat-saber-video-tool 的 `/api/cookies/import`**。
+
+前提：
+
+- `beat-saber-video-tool` 正在运行（默认 `http://127.0.0.1:8770`）
+- 你已在浏览器里登录 YouTube（上传的就是这个登录态）
+- 本目录有 `bin\yt-dlp.exe`（或用 `-Ytdlp` 指定）
+
+### 用法
+
+```powershell
+# 默认：从 Edge 导出，推到 http://127.0.0.1:8770
+powershell -ExecutionPolicy Bypass -File .\sync-cookies.ps1
+
+# 指定浏览器 / 工具地址
+.\sync-cookies.ps1 -Browser firefox -ToolUrl http://127.0.0.1:8770
+
+# 已有 cookies.txt，直接上传
+.\sync-cookies.ps1 -CookiesFile .\cookies.txt
+```
+
+也可以直接双击 `sync-cookies.bat`。
+
+| 参数 | 默认 | 说明 |
+|---|---|---|
+| `-Browser` | `edge` | firefox / edge / chrome / brave / opera / vivaldi / chromium |
+| `-ToolUrl` | `http://127.0.0.1:8770` | beat-saber-video-tool 的地址 |
+| `-CookiesFile` | 空 | 直接上传已有的 Netscape cookies.txt |
+| `-Ytdlp` | 自动查找 | yt-dlp.exe 路径 |
+| `-KeepFile` | 关 | 保留导出的临时文件 |
+
+推送成功后会自动调用 `/api/cookies/detect` 做一次检测。
+
+> **安全**：cookies 等价于登录态。脚本只会 POST 到你本机运行的视频工具，不会发送给任何第三方；临时文件默认用完即删。
+
+---
+
 ## 卸载
 
 ```bat
